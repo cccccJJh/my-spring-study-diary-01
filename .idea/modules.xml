@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.study.my-spring-study-diary.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.study.my-spring-study-diary.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/my-spring-study-diary.iml" filepath="$PROJECT_DIR$/.idea/my-spring-study-diary.iml" />
     </modules>
   </component>
