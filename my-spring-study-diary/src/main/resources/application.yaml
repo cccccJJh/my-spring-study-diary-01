@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: my-spring-study-diary
+  autoconfigure:
+    exclude:
+      #- org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      #- org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+# application.yml - 자동 설정 리포트 활성화
+debug: true
+
