@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/v1/logs
+Content-Type: application/json
+
+{
+  "title": "Spring Boot IoC와 DI 개념",
+  "content": "IoC는 제어의 역전으로, 객체 생성과 관리를 Spring Container가 담당한다.",
+  "category": "SPRING",
+  "understanding": "GOOD",
+  "studyTime": 120,
+  "studyDate": "2025-01-15"
+}
