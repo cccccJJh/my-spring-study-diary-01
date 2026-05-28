@@ -32,4 +32,9 @@ public class ApiResponse<T> {
         return new ApiResponse<>(false, message, null);
     }
 
+    // 에러 코드와 메시지를 함께 담는 버전
+    public static ApiResponse<Void> error(String errorCode, String message) {
+        return new ApiResponse<>(false, errorCode + ": " + message, null);
+    }
+
 }
