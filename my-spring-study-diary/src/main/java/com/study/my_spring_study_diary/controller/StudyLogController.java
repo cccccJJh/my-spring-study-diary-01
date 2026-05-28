@@ -6,12 +6,15 @@ import com.study.my_spring_study_diary.dto.request.StudyLogCreateRequest;
 import com.study.my_spring_study_diary.dto.response.StudyLogResponse;
 import com.study.my_spring_study_diary.global.common.ApiResponse;
 import com.study.my_spring_study_diary.service.StudyLogService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.annotation.*;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 학습 일지 컨트롤러
@@ -59,4 +62,57 @@ public class StudyLogController {
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.success(response));
     }
+
+    /**
+     * 특정 학습 일지 조회 (READ - Single)
+     *
+     * @GetMapping("/{id}"): GET 요청을 처리 (경로 변수 포함)
+     * @PathVariable: URL 경로의 {id} 값을 매개변수로 받음
+     *
+     * GET /api/v1/logs/{id}
+     */
+    @GetMapping("/{id}")
+    public StudyLogResponse getStudyLogById(
+            @PathVariable Long id) {
+
+        // Service 호출하여 ID로 학습 일지 조회
+        return studyLogService.getStudyLogById(id);
+
+    }
+
+    /**
+     * 날짜별 학습 일지 조회 (READ - By Date)
+     *
+     * @GetMapping("/date/{date}"): GET 요청을 처리 (날짜 경로 변수 포함)
+     * @PathVariable: URL 경로의 {date} 값을 매개변수로 받음
+     *
+     * GET /api/v1/logs/date/{date}
+     * 예시: GET /api/v1/logs/date/2025-01-15
+     */
+    @GetMapping("/date/{date}")
+    public List<StudyLogResponse> getStudyLogsByDate(
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+
+        // Service 호출하여 날짜로 학습 일지 조회
+        return studyLogService.getStudyLogsByDate(date);
+    }
+
+    /**
+     * 카테고리별 학습 일지 조회 (READ - By Category)
+     *
+     * @GetMapping("/category/{category}"): GET 요청을 처리 (카테고리 경로 변수 포함)
+     * @PathVariable: URL 경로의 {category} 값을 매개변수로 받음
+     *
+     * GET /api/v1/logs/category/{category}
+     * 예시: GET /api/v1/logs/category/SPRING
+     *      GET /api/v1/logs/category/JAVA
+     */
+    @GetMapping("/category/{category}")
+    public List<StudyLogResponse> getStudyLogsByCategory(
+            @PathVariable String category) {
+
+        // Service 호출하여 카테고리로 학습 일지 조회
+        return studyLogService.getStudyLogsByCategory(category);
+    }
+
 }

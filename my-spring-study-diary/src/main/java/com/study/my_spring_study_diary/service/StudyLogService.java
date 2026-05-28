@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 학습 일지 서비스
@@ -69,6 +71,50 @@ public class StudyLogService {
         //entitiy -> resoponse DTO 변환 후 반환
         return StudyLogResponse.from(savedStudyLog);
     }
+
+    //전체 학습 일지 목록 조회
+    public List<StudyLogResponse> getAllStudyLogs(LocalDate date){
+        List<StudyLog> studyLogs = studyLogRepository.findAll();
+
+        return studyLogs.stream()
+                .map(StudyLogResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    //ID로 학습일지 단건 조회
+    public StudyLogResponse getStudyLogById(Long id){
+        StudyLog studyLog = studyLogRepository.findById(id).orElse(null);
+
+        return StudyLogResponse.from(studyLog);
+    }
+
+    //날짜별 학습일지 조회
+    public List<StudyLogResponse> getStudyLogsByDate(LocalDate date){
+        List<StudyLog> studyLogs = studyLogRepository.findByStudyDate(date);
+
+        return studyLogs.stream()
+                .map(StudyLogResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    //카테고리별 학습일지 조회
+    public List<StudyLogResponse> getStudyLogsByCategory(String categoryName){
+        Category category;
+        try{
+            category = Category.valueOf(categoryName.toUpperCase());
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(
+                    "유효하지 않은 카테고리입니다: " + categoryName
+            );
+        }
+
+        List<StudyLog> studyLogs = studyLogRepository.findByCategory(category);
+
+        return studyLogs.stream()
+                .map(StudyLogResponse::from)
+                .collect(Collectors.toList());
+    }
+
 
 
     //생성 요청시 유효성 검증
